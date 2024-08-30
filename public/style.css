@@ -1,0 +1,179 @@
+/* General body styles */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(20deg, #ddd6d6 0%, #68b1a4 51%, #ec4c2d 95%);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Textarea styles */
+textarea.form-control {
+    height: 150px;
+    resize: vertical;
+}
+
+/* App container for centering */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* Logo positioning */
+.logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    max-width: 100px;
+    box-shadow: rgb(250, 241, 223) 5px 5px 10px;
+    border-radius: 10%;
+}
+
+/* Description text styling */
+.description-text {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 1.1em;
+    color: #333;
+    max-width: 800px;
+}
+
+.description {
+    font-size: 2rem;
+}
+
+/* Centered content styling */
+.centered-content {
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    max-width: 800px;
+    padding: 10px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Dropdown styles */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+#language-search {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 10px 12px;
+    text-decoration: none;
+    display: block;
+    font-size: 1em;
+    background-color: #ddd;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Button container */
+.btn-container {
+    display: flex;
+}
+
+/* Input and output section styling */
+.translation-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin-top: 15px;
+    position: relative;
+}
+
+.input-section, .output-section {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.output-section {
+    border-left: 1px solid #ddd;
+    padding-left: 20px;
+    position: relative;
+}
+
+/* Translated text styling */
+.translated-text {
+    display: flex;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    white-space: pre-wrap;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* Icon styles */
+.icon-overlay {
+    position: absolute;
+    bottom: 10px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.mic-icon {
+    left: 10px;
+}
+
+.paste-icon {
+    right: 10px;
+}
+
+/* Button styles */
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

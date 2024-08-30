@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TranslAItor</title>
+    <link rel="icon" style="border-radius: 50%;" href="Translaitor1.jpg">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .dropdown-container {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            max-height: 300px; /* Adjust based on your needs */
+            overflow-y: auto; /* Scroll if content overflows */
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {background-color: #f1f1f1}
+        .centered-content, .translation-container {
+            text-align: center;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="app-container">
+        <img class="logo img-fluid" src="Translaitor1.jpg" alt="TranslAItor Logo">
+
+        <div class="description-text">
+            <button @click="openDescription" class="raise" href="" target="_self"><i class="bi bi-arrow-right-circle-fill"></i><strong style="margin-left: 10px">#1</strong> Translator</button>
+        </div>
+
+        <div v-if="!translatedText" class="centered-content">
+            <form @submit.prevent="translateText" style="margin: 5%;">
+                <div class="mb-3 position-relative">
+                    <label for="inputText" class="form-label">Text to Translate</label>
+                    <textarea class="form-control" id="inputText" v-model="inputText" rows="4" placeholder="Enter the text you want to translate" required></textarea>
+                    
+                    <!-- Paste from clipboard icon -->
+                    <i @click="pasteFromClipboard" class="bi bi-clipboard position-absolute icon-overlay paste-icon"></i>
+
+                    <!-- Microphone icon for dictation -->
+                    <i @click="startDictation" class="bi bi-mic position-absolute icon-overlay mic-icon"></i>
+                </div>
+
+                <div class="dropdown-container">
+                    <input type="text" id="language-search" placeholder="Search for a language..." onkeyup="filterLanguages()">
+                    <div id="dropdown" class="dropdown-content">
+                        <a href="#" data-value="en">🇺🇸 English</a>
+                        <a href="#" data-value="es">🇪🇸 Spanish</a>
+                        <a href="#" data-value="fr">🇫🇷 French</a>
+                        <a href="#" data-value="de">🇩🇪 German</a>
+                        <a href="#" data-value="it">🇮🇹 Italian</a>
+                        <a href="#" data-value="pt">🇵🇹 Portuguese</a>
+                        <a href="#" data-value="ru">🇷🇺 Russian</a>
+                        <a href="#" data-value="zh">🇨🇳 Chinese (Simplified)</a>
+                        <a href="#" data-value="ja">🇯🇵 Japanese</a>
+                        <a href="#" data-value="ko">🇰🇷 Korean</a>
+                        <a href="#" data-value="ar">🇸🇦 Arabic</a>
+                        <a href="#" data-value="hi">🇮🇳 Hindi</a>
+                        <a href="#" data-value="tr">🇹🇷 Turkish</a>
+                        <a href="#" data-value="nl">🇳🇱 Dutch</a>
+                        <a href="#" data-value="sv">🇸🇪 Swedish</a>
+                        <a href="#" data-value="no">🇳🇴 Norwegian</a>
+                        <a href="#" data-value="da">🇩🇰 Danish</a>
+                        <a href="#" data-value="fi">🇫🇮 Finnish</a>
+                        <a href="#" data-value="pl">🇵🇱 Polish</a>
+                        <a href="#" data-value="cs">🇨🇿 Czech</a>
+                        <a href="#" data-value="sk">🇸🇰 Slovak</a>
+                        <a href="#" data-value="hu">🇭🇺 Hungarian</a>
+                        <a href="#" data-value="ro">🇷🇴 Romanian</a>
+                        <a href="#" data-value="bg">🇧🇬 Bulgarian</a>
+                        <a href="#" data-value="hr">🇭🇷 Croatian</a>
+                        <a href="#" data-value="sr">🇷🇸 Serbian</a>
+                        <a href="#" data-value="sl">🇸🇮 Slovenian</a>
+                        <a href="#" data-value="et">🇪🇪 Estonian</a>
+                        <a href="#" data-value="lv">🇱🇻 Latvian</a>
+                        <a href="#" data-value="lt">🇱🇹 Lithuanian</a>
+                        <a href="#" data-value="uk">🇺🇦 Ukrainian</a>
+                        <a href="#" data-value="el">🇬🇷 Greek</a>
+                        <a href="#" data-value="he">🇮🇱 Hebrew</a>
+                        <a href="#" data-value="id">🇲🇨 Indonesian</a>
+                        <a href="#" data-value="ms">🇲🇾 Malay</a>
+                        <a href="#" data-value="vi">🇻🇳 Vietnamese</a>
+                        <a href="#" data-value="sw">🇰🇪 Swahili</a>
+                        <!-- Add more languages as needed -->
+                    </div>
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit" class="btn btn-primary w-100" :disabled="loading">Translate <i class="bi bi-translate"></i></button>
+                </div>
+            </form>
+        </div>
+
+        <div v-if="translatedText" class="translation-container">
+            <div class="input-section">
+                <form @submit.prevent="translateText">
+                    <div class="mb-3 position-relative">
+                        <h3 class="text-center">Text to translate</h3>
+                        <textarea class="form-control" id="inputText" v-model="inputText" rows="4" placeholder="Enter the text you want to translate" required> </textarea>
+                            <i @click="pasteFromClipboard" class="bi bi-clipboard position-absolute icon-overlay paste-icon"></i>
+
+                    <!-- Microphone icon for dictation -->
+                    <i @click="startDictation" class="bi bi-mic position-absolute icon-overlay mic-icon"></i>
+                    </div>
+
+                    <div class="dropdown-container">
+                        <input type="text" id="language-search" placeholder="Search for a language..." onkeyup="filterLanguages()">
+                        <div id="dropdown" class="dropdown-content">
+                            <a href="#" data-value="en">🇺🇸 English</a>
+                            <a href="#" data-value="es">🇪🇸 Spanish</a>
+                            <a href="#" data-value="fr">🇫🇷 French</a>
+                            <a href="#" data-value="de">🇩🇪 German</a>
+                            <a href="#" data-value="it">🇮🇹 Italian</a>
+                            <a href="#" data-value="pt">🇵🇹 Portuguese</a>
+                            <a href="#" data-value="ru">🇷🇺 Russian</a>
+                            <a href="#" data-value="zh">🇨🇳 Chinese (Simplified)</a>
+                            <a href="#" data-value="ja">🇯🇵 Japanese</a>
+                            <a href="#" data-value="ko">🇰🇷 Korean</a>
+                            <a href="#" data-value="ar">🇸🇦 Arabic</a>
+                            <a href="#" data-value="hi">🇮🇳 Hindi</a>
+                            <a href="#" data-value="tr">🇹🇷 Turkish</a>
+                            <a href="#" data-value="nl">🇳🇱 Dutch</a>
+                            <a href="#" data-value="sv">🇸🇪 Swedish</a>
+                            <a href="#" data-value="no">🇳🇴 Norwegian</a>
+                            <a href="#" data-value="da">🇩🇰 Danish</a>
+                            <a href="#" data-value="fi">🇫🇮 Finnish</a>
+                            <a href="#" data-value="pl">🇵🇱 Polish</a>
+                            <a href="#" data-value="cs">🇨🇿 Czech</a>
+                            <a href="#" data-value="sk">🇸🇰 Slovak</a>
+                            <a href="#" data-value="hu">🇭🇺 Hungarian</a>
+                            <a href="#" data-value="ro">🇷🇴 Romanian</a>
+                            <a href="#" data-value="bg">🇧🇬 Bulgarian</a>
+                            <a href="#" data-value="hr">🇭🇷 Croatian</a>
+                            <a href="#" data-value="sr">🇷🇸 Serbian</a>
+                            <a href="#" data-value="sl">🇸🇮 Slovenian</a>
+                            <a href="#" data-value="et">🇪🇪 Estonian</a>
+                            <a href="#" data-value="lv">🇱🇻 Latvian</a>
+                            <a href="#" data-value="lt">🇱🇹 Lithuanian</a>
+                            <a href="#" data-value="uk">🇺🇦 Ukrainian</a>
+                            <a href="#" data-value="el">🇬🇷 Greek</a>
+                            <a href="#" data-value="he">🇮🇱 Hebrew</a>
+                            <a href="#" data-value="id">🇲🇨 Indonesian</a>
+                            <a href="#" data-value="ms">🇲🇾 Malay</a>
+                            <a href="#" data-value="vi">🇻🇳 Vietnamese</a>
+                            <a href="#" data-value="sw">🇰🇪 Swahili</a>
+                            <!-- Add more languages as needed -->
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button type="submit" class="btn btn-primary w-100" :disabled="loading">Translate <i class="bi bi-translate"></i></button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="output-section">
+                <h3 class="text-center">Translated Text</h3>
+                <div class="translated-text">{{ translatedText }}</div>
+                <div>
+                    <button @click="copyToClipboard" style="display: flex; width: fit-content" class="btn btn-secondary">Copy</button>
+                </div>
+                <span style="font-size: 12px; color: #333">AI's can be wrong. We recommend double checking important texts.</span>
+            </div>
+        </div>
+
+        <div v-if="error" class="alert alert-danger mt-3" role="alert">
+            {{ error }}
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
