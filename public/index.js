@@ -1,12 +1,5 @@
-    const firebaseConfig = {
-        apiKey: "AIzaSyAezPR95y-wbRNckilenlpxxS-4s9HDLC0",
-        authDomain: "translaitor-app.firebaseapp.com",
-        projectId: "translaitor-app",
-        storageBucket: "translaitor-app.appspot.com",
-        messagingSenderId: "440107315380",
-        appId: "1:440107315380:web:d11b1a5bcc3804447b67e1",
-        measurementId: "G-24LCFTYFQD"
-    };
+
+
     Vue.createApp({
         data() {
             return {
@@ -16,7 +9,6 @@
                 loading: false,
                 error: '',
                 isTranslated: false,
-                GApiKey: 'AIzaSyCSbpfAp-KAwQSE2sg9VHkcGI9Mqb6AIrg'
             };
         },
         methods: {
